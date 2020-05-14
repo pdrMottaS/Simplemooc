@@ -1,0 +1,30 @@
+{% extends 'courses/course_panel.html' %}
+
+{% block breadcrumb %}
+{{block.super}}
+<li>/</li>
+<li><a href="{% url 'courses:announcements' course.slug %}">Anúncios</a></li>
+{% endblock %}
+
+{% block dashboard_content %}
+{% for announcement in announcements %}
+<div class="well">
+    <h2> <a href="{% url 'courses:show_announcements' course.slug announcement.id %}" title="">{{announcement.title}}</a></h2>
+    <p>
+        {{announcement.content|linebreaks}}
+    </p>
+    <p>
+        <a href="{% url 'courses:show_announcements' course.slug announcement.id %}#comments" title="">
+        <i class="fa fa-comments-o"></i>
+        {% with comment_count=announcement.comments.count %}
+        {{comment_count}} Comentário{{comment_count|pluralize}}
+        {% endwith %}
+        </a>
+    </p>
+</div>
+{% empty %}
+<div class="well">
+    <h2>Nenhum anúncio criado</h2>
+</div>
+{% endfor %}
+{% endblock %}

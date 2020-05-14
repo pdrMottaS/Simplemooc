@@ -1,0 +1,34 @@
+{% extends "registration/painel.html" %}
+
+{% block breadcrumb %}
+    {{block.super}}
+    <li>/</li>
+    <li><a href="{% url 'accounts:edit_pass' %}">Editar Senha</a></li>
+{% endblock %}
+{% block dashboard_content %}
+<form class="pure-form pure-form-stacked" method="post">
+    {% csrf_token %}
+    {% if success %}
+        <p>Senha Alterada com sucesso</p>
+    {% endif %}
+    <fieldset>
+        <ul class="errorlist">
+            <li>{{form.non_field_errors}}</li>
+        </ul>
+        {% for field in form %}
+        <div class="pure-control-group">
+            {{field.label_tag}}
+            {{field}}
+            {% if field.errors %}
+            <ul class="errorlist">
+                <li>{{field.errors}}</li>
+            </ul>
+            {% endif %}
+        </div>
+        {% endfor %}
+        <div class="pure-controls">
+            <button type="submit" class="pure-button pure-button-primary">Alterar Senha</button>
+        </div>
+    </fieldset>
+</form>
+{% endblock %}

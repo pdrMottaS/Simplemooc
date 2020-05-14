@@ -1,0 +1,1 @@
+from simplemooc.courses.tests import test_forms
